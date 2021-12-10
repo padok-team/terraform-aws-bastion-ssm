@@ -3,6 +3,7 @@
 locals {
   bastion_userdata = <<EOF
 #cloud-config
+<<<<<<< HEAD
 package_update: true
 package_upgrade: true
 users:
@@ -14,6 +15,19 @@ runcmd:
   - echo "MaxAuthTries 20" >> /etc/ssh/sshd_config
   - systemctl restart sshd
 ${var.add_ssm_user_from_sudoers ? "  - echo 'ssm-user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/ssm-user" : ""}
+=======
+groups:
+  - ssm
+users:
+  - name: ssm-user
+    gecos: SSM USER
+    primary_group: ssm
+    ssh_authorized_keys:
+      - ${chomp(tls_private_key.ssm_user.public_key_openssh)}
+runcmd:
+  - echo "MaxAuthTries 20" >> /etc/ssh/sshd_config
+  - systemctl restart sshd
+>>>>>>> feat: autonomous SSM Bastion
 EOF
 }
 
@@ -21,8 +35,11 @@ EOF
 # shared for all ops while isn't possible to open remote tunnels from AWS SSM
 # THIS WILL BE REMOVE WHEN SSM REMOTE TUNNEL WILL BE IMPLEMENTED
 resource "tls_private_key" "ssm_user" {
+<<<<<<< HEAD
   count = var.manage_ssm_user_ssh_key ? 1 : 0
 
+=======
+>>>>>>> feat: autonomous SSM Bastion
   algorithm = "RSA"
   rsa_bits  = "4096"
 }
@@ -46,10 +63,14 @@ resource "aws_launch_template" "bastion" {
 
   instance_type = var.instance_type
 
+<<<<<<< HEAD
   # ec2-user key doesn't for now
   # we will fix this later with the new SSM remote tunnel
   #key_name  = aws_key_pair.ec2_user.key_name
 
+=======
+  key_name  = aws_key_pair.ec2_user.key_name
+>>>>>>> feat: autonomous SSM Bastion
   user_data = base64encode(local.bastion_userdata)
 
   # very important: update to the latest version for

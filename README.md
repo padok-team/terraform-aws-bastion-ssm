@@ -51,6 +51,7 @@ output "ssm_key" {
 
 - [Basic usage](examples/basic/main.tf)
 <!-- BEGIN_TF_DOCS -->
+
 ## Modules
 
 No modules.
