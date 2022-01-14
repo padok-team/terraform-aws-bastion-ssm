@@ -31,11 +31,16 @@ variable "ami_id" {
   default     = ""
 }
 
-#variable "key_name" {
-#  description = "The key name to use for the instance"
-#  type        = string
-#  default     = ""
-#}
+variable "manage_ssm_user_ssh_key" {
+  description = "Wether you want to let the module manage the ssh key for the ssm_user, if set to false you need to set `custom_ssm_user_public_key` "
+  type        = bool
+  default     = true
+}
+variable "custom_ssm_user_public_key" {
+  description = "The public key to use for the ec2_user user"
+  type        = string
+  default     = ""
+}
 
 variable "update_default_version" {
   description = "Whether to update Default Version each update."

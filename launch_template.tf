@@ -3,7 +3,6 @@
 locals {
   bastion_userdata = <<EOF
 #cloud-config
-<<<<<<< HEAD
 package_update: true
 package_upgrade: true
 users:
@@ -15,19 +14,6 @@ runcmd:
   - echo "MaxAuthTries 20" >> /etc/ssh/sshd_config
   - systemctl restart sshd
 ${var.add_ssm_user_from_sudoers ? "  - echo 'ssm-user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/ssm-user" : ""}
-=======
-groups:
-  - ssm
-users:
-  - name: ssm-user
-    gecos: SSM USER
-    primary_group: ssm
-    ssh_authorized_keys:
-      - ${chomp(tls_private_key.ssm_user.public_key_openssh)}
-runcmd:
-  - echo "MaxAuthTries 20" >> /etc/ssh/sshd_config
-  - systemctl restart sshd
->>>>>>> feat: autonomous SSM Bastion
 EOF
 }
 
@@ -36,16 +22,22 @@ EOF
 # THIS WILL BE REMOVE WHEN SSM REMOTE TUNNEL WILL BE IMPLEMENTED
 resource "tls_private_key" "ssm_user" {
 <<<<<<< HEAD
+<<<<<<< HEAD
   count = var.manage_ssm_user_ssh_key ? 1 : 0
 
 =======
 >>>>>>> feat: autonomous SSM Bastion
+=======
+  for_each = var.manage_ssm_user_ssh_key ? [0] : []
+
+>>>>>>> feat(bastion-ssm): Allow custom SSH keys for ec2 user and ssm user
   algorithm = "RSA"
   rsa_bits  = "4096"
 }
 
 # an SSH key for ec2-user
 # needed to debug bastion and access root account
+<<<<<<< HEAD
 #resource "tls_private_key" "ec2_user" {
 #  count = var.manage_ec2_user_ssh_key ? 1 : 0
 #
@@ -56,6 +48,18 @@ resource "tls_private_key" "ssm_user" {
 #  key_name   = "bastion_ssm_ec2_user_2"
 #  public_key = var.manage_ec2_user_ssh_key ? tls_private_key.ec2_user[0].public_key_openssh : var.custom_ec2_user_public_key
 #}
+=======
+resource "tls_private_key" "ec2_user" {
+  for_each = var.manage_ec2_user_ssh_key ? [0] : []
+
+  algorithm = "RSA"
+  rsa_bits  = "4096"
+}
+resource "aws_key_pair" "ec2_user" {
+  key_name   = "bastion_ssm_ec2_user"
+  public_key = var.manage_ec2_user_ssh_key ? tls_private_key.ec2_user[0].public_key_openssh : var.custom_ec2_user_public_key
+}
+>>>>>>> feat(bastion-ssm): Allow custom SSH keys for ec2 user and ssm user
 
 resource "aws_launch_template" "bastion" {
   name_prefix = local.lname
