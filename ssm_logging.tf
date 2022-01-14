@@ -22,7 +22,7 @@ resource "aws_ssm_document" "ssm_logging" {
     "inputs": {
         "s3BucketName": "${var.ssm_logging_bucket_name}",
         "s3KeyPrefix": "",
-        "s3EncryptionEnabled": true,
+        "s3EncryptionEnabled": ${var.ssm_logging_bucket_encryption},
         "shellProfile": {
             "linux" : "/bin/bash",
             "windows" : ""

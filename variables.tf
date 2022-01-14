@@ -1,10 +1,20 @@
 #
-# Variables for IAM
+# Variables for SSM
 #
 variable "ssm_logging_bucket_name" {
   description = "SSM Logging Bucket name"
   type        = string
 }
+
+variable "ssm_logging_bucket_encryption" {
+  description = "Wether the Amazon S3 bucket you specified in the s3BucketName input must be encrypted"
+  type        = bool
+  default     = true
+}
+
+#
+# Variables for IAM
+#
 
 variable "custom_iam" {
   description = "A list of data.aws_iam_policy_document"
