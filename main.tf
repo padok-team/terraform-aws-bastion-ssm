@@ -1,4 +1,3 @@
-
 locals {
   # prefix
   lname = "bastion-ssm-${random_pet.version.id}-"

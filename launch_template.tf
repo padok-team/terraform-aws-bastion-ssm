@@ -1,4 +1,3 @@
-
 # Minimal launch template for SSH setup
 locals {
   bastion_userdata = <<EOF

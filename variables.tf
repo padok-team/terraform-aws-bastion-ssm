@@ -7,7 +7,7 @@ variable "ssm_logging_bucket_name" {
 }
 
 variable "ssm_logging_bucket_encryption" {
-  description = "Wether the Amazon S3 bucket you specified in the s3BucketName input must be encrypted"
+  description = "Whether the Amazon S3 bucket you specified in the s3BucketName input must be encrypted"
   type        = bool
   default     = true
 }
@@ -145,7 +145,7 @@ variable "enabled_metrics" {
 }
 
 variable "manage_ssm_user_ssh_key" {
-  description = "Wether you want to let the module manage the ssh key for the ssm-user, if set to false you need to set `custom_ssm_user_public_key` "
+  description = "Whether you want to let the module manage the ssh key for the ssm-user, if set to false you need to set `custom_ssm_user_public_key` "
   type        = bool
   default     = true
 }
@@ -157,7 +157,7 @@ variable "custom_ssm_user_public_key" {
 }
 
 #variable "manage_ec2_user_ssh_key" {
-#  description = "Wether you want to let the module manage the ssh key for the ec2-user, if set to false you need to set `custom_ec2_user_public_key` "
+#  description = "Whether you want to let the module manage the ssh key for the ec2-user, if set to false you need to set `custom_ec2_user_public_key` "
 #  type        = bool
 #  default     = true
 #}
@@ -168,7 +168,7 @@ variable "custom_ssm_user_public_key" {
 #}
 
 variable "add_ssm_user_to_sudoers" {
-  description = "Wether you want to add the ssm_user to sudoers"
+  description = "Whether you want to add the ssm_user to sudoers"
   type        = bool
   default     = false
 }

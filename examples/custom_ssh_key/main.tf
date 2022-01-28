@@ -41,7 +41,7 @@ module "my_ssm_bastion" {
   security_groups         = [aws_security_group.bastion_ssm.id]
   vpc_zone_identifier     = module.my_vpc.private_subnets_ids
 
-  manage_ssm_user_ssh_key = false
+  manage_ssm_user_ssh_key    = false
   custom_ssm_user_public_key = tls_private_key.ssm_user.public_key_openssh
 
   add_ssm_user_to_sudoers = true
