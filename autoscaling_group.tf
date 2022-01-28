@@ -26,7 +26,7 @@ resource "aws_autoscaling_group" "bastion" {
 
   dynamic "tag" {
     for_each = local.tags
-  
+
     content {
       key                 = tag.key
       value               = tag.value
@@ -36,7 +36,7 @@ resource "aws_autoscaling_group" "bastion" {
 
   tag {
     key                 = "Name"
-    value               = trim(local.lname,"-")
+    value               = trim(local.lname, "-")
     propagate_at_launch = true
   }
 

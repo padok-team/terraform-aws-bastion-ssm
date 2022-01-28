@@ -3,7 +3,7 @@ locals {
   lname = "bastion-ssm-${random_pet.version.id}-"
 
   tags = {
-    Name = trim(local.lname,"-")
+    Name = trim(local.lname, "-")
   }
 }
 
