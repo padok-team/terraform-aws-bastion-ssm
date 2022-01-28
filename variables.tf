@@ -167,7 +167,7 @@ variable "custom_ssm_user_public_key" {
 #  default     = ""
 #}
 
-variable "add_ssm_user_from_sudoers" {
+variable "add_ssm_user_to_sudoers" {
   description = "Wether you want to add the ssm_user to sudoers"
   type        = bool
   default     = false

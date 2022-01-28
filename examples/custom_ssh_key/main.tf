@@ -44,7 +44,7 @@ module "my_ssm_bastion" {
   manage_ssm_user_ssh_key = false
   custom_ssm_user_public_key = tls_private_key.ssm_user.public_key_openssh
 
-  add_ssm_user_from_sudoers = true
+  add_ssm_user_to_sudoers = true
 }
 
 resource "tls_private_key" "ssm_user" {

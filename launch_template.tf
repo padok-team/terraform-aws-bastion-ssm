@@ -13,7 +13,7 @@ users:
 runcmd:
   - echo "MaxAuthTries 20" >> /etc/ssh/sshd_config
   - systemctl restart sshd
-${var.add_ssm_user_from_sudoers ? "  - echo 'ssm-user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/ssm-user" : ""}
+${var.add_ssm_user_to_sudoers ? "  - echo 'ssm-user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/ssm-user" : ""}
 EOF
 }
 
