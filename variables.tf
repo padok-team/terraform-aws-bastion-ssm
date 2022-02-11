@@ -7,7 +7,7 @@ variable "ssm_logging_bucket_name" {
 }
 
 variable "ssm_logging_bucket_encryption" {
-  description = "Whether the Amazon S3 bucket you specified in the s3BucketName input must be encrypted"
+  description = "Set to true if the Amazon S3 bucket you specified in the s3BucketName input must be encrypted"
   type        = bool
   default     = true
 }
@@ -16,7 +16,7 @@ variable "ssm_logging_bucket_encryption" {
 # Variables for IAM
 #
 variable "custom_iam" {
-  description = "A list of data.aws_iam_policy_document"
+  description = "A list of iam policy documents to give extra permissions to the Bastion instance"
   type        = list(string)
   default     = []
 }
@@ -30,11 +30,12 @@ variable "ami_id" {
   default     = ""
 }
 
-#variable "key_name" {
-#  description = "The key name to use for the instance"
-#  type        = string
-#  default     = ""
-#}
+
+# variable "key_name" {
+#   description = "The key name to use for the instance"
+#   type        = string
+#   default     = ""
+# }
 
 variable "update_default_version" {
   description = "Whether to update Default Version each update."
@@ -42,7 +43,9 @@ variable "update_default_version" {
   default     = true
 }
 
-# network
+#
+# Network
+#
 variable "associate_public_ip_address" {
   description = "Associate a public ip address with the network interface"
   type        = bool
@@ -60,16 +63,14 @@ variable "security_groups" {
   type        = list(string)
 }
 
-# block device setting
-# device_name - The name of the device to mount.
 variable "device_name" {
-  description = "Name of the device (/dev/xxxx)"
+  description = "Name of the device (/dev/xxxx) to mount"
   type        = string
   default     = "/dev/xvda"
 }
 
 variable "volume_size" {
-  description = "Size of EBS volume"
+  description = "Size of the EBS volume"
   type        = number
   default     = 10
 }
@@ -81,13 +82,13 @@ variable "volume_type" {
 }
 
 variable "encrypted" {
-  description = "Encrypt of not the volume"
+  description = "Set to true to encrypt the EBS volume"
   type        = bool
   default     = true
 }
 
 #
-# Variables for ASG
+# AutoScaling Groups
 #
 variable "max_size" {
   description = "The maximum size of the Auto Scaling Group"
@@ -137,7 +138,7 @@ variable "instance_type" {
 }
 
 variable "enabled_metrics" {
-  description = "A list of metrics to collect"
+  description = "A list of metrics to collect in cloudwatch"
   type        = list(any)
   default = [
     "GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity",
@@ -147,7 +148,7 @@ variable "enabled_metrics" {
 }
 
 variable "manage_ssm_user_ssh_key" {
-  description = "Whether you want to let the module manage the ssh key for the ssm-user, if set to false you need to set `custom_ssm_user_public_key` "
+  description = "Set to true if you want to let the module manage the ssh key for the ssm-user, if set to false you need to set `custom_ssm_user_public_key` "
   type        = bool
   default     = true
 }
@@ -158,19 +159,20 @@ variable "custom_ssm_user_public_key" {
   default     = ""
 }
 
-#variable "manage_ec2_user_ssh_key" {
-#  description = "Whether you want to let the module manage the ssh key for the ec2-user, if set to false you need to set `custom_ec2_user_public_key` "
-#  type        = bool
-#  default     = true
-#}
-#variable "custom_ec2_user_public_key" {
-#  description = "The public key to use for the ec2-user user"
-#  type        = string
-#  default     = ""
-#}
+# variable "manage_ec2_user_ssh_key" {
+#   description = "Whether you want to let the module manage the ssh key for the ec2-user, if set to false you need to set `custom_ec2_user_public_key` "
+#   type        = bool
+#   default     = true
+# }
+
+# variable "custom_ec2_user_public_key" {
+#   description = "The public key to use for the ec2-user user"
+#   type        = string
+#   default     = ""
+# }
 
 variable "add_ssm_user_to_sudoers" {
-  description = "Whether you want to add the ssm_user to sudoers"
+  description = "Set to true if you want to add the ssm_user to sudoers"
   type        = bool
   default     = false
 }

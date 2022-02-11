@@ -16,7 +16,7 @@ ${var.add_ssm_user_to_sudoers ? "  - echo 'ssm-user ALL=(ALL) NOPASSWD:ALL' >> /
 EOF
 }
 
-# an SSH key for tunnels
+# An SSH key for tunnels
 # shared for all ops while isn't possible to open remote tunnels from AWS SSM
 # THIS WILL BE REMOVE WHEN SSM REMOTE TUNNEL WILL BE IMPLEMENTED
 resource "tls_private_key" "ssm_user" {
@@ -26,18 +26,19 @@ resource "tls_private_key" "ssm_user" {
   rsa_bits  = "4096"
 }
 
-# an SSH key for ec2-user
+# An SSH key for ec2-user
 # needed to debug bastion and access root account
-#resource "tls_private_key" "ec2_user" {
-#  count = var.manage_ec2_user_ssh_key ? 1 : 0
+# resource "tls_private_key" "ec2_user" {
+#   count = var.manage_ec2_user_ssh_key ? 1 : 0
 #
-#  algorithm = "RSA"
-#  rsa_bits  = "4096"
-#}
-#resource "aws_key_pair" "ec2_user" {
-#  key_name   = "bastion_ssm_ec2_user_2"
-#  public_key = var.manage_ec2_user_ssh_key ? tls_private_key.ec2_user[0].public_key_openssh : var.custom_ec2_user_public_key
-#}
+#   algorithm = "RSA"
+#   rsa_bits  = "4096"
+# }
+
+# resource "aws_key_pair" "ec2_user" {
+#   key_name   = "bastion_ssm_ec2_user_2"
+#   public_key = var.manage_ec2_user_ssh_key ? tls_private_key.ec2_user[0].public_key_openssh : var.custom_ec2_user_public_key
+# }
 
 resource "aws_launch_template" "bastion" {
   name_prefix = local.lname
