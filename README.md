@@ -2,6 +2,8 @@
 
 Terraform module which creates a SSM Bastion resources on AWS. This module will allow you to use SSH tunnel to access your private ressources (like EKS endpoint, RDS, etc).
 
+### Context
+
 Currently SSM start-session doesn't support remote forwarding. To tackle this issue, we use a bastion host ([there is an open issue to add this feature to SSM](https://github.com/aws/amazon-ssm-agent/pull/389)). When the remote forward will be available, this module will be updated because we won't need an host (and SSH key, btw).
 
 To easily use remote forwarding, add the following configuration to your SSH config (`~/.ssh/config`):
@@ -93,3 +95,28 @@ No modules.
 | <a name="output_ssm_private_key"></a> [ssm_private_key](#output_ssm_private_key) | ssm ssh private key for tunnel |
 
 <!-- END_TF_DOCS -->
+
+## License
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+See [LICENSE](LICENSE) for full details.
+
+```text
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+```

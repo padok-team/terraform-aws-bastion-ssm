@@ -18,7 +18,7 @@ data "aws_region" "current" {}
 resource "random_pet" "version" {}
 
 # default AMI
-data "aws_ami" "amazon-linux-2" {
+data "aws_ami" "amazon_linux_2" {
   most_recent = true
   owners      = ["amazon"]
 

@@ -15,7 +15,6 @@ variable "ssm_logging_bucket_encryption" {
 #
 # Variables for IAM
 #
-
 variable "custom_iam" {
   description = "A list of data.aws_iam_policy_document"
   type        = list(string)
@@ -68,16 +67,19 @@ variable "device_name" {
   type        = string
   default     = "/dev/xvda"
 }
+
 variable "volume_size" {
   description = "Size of EBS volume"
   type        = number
   default     = 10
 }
+
 variable "volume_type" {
   description = "Type of EBS volume"
   type        = string
   default     = "gp3"
 }
+
 variable "encrypted" {
   description = "Encrypt of not the volume"
   type        = bool

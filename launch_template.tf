@@ -41,7 +41,7 @@ resource "tls_private_key" "ssm_user" {
 
 resource "aws_launch_template" "bastion" {
   name_prefix = local.lname
-  image_id    = var.ami_id == "" ? data.aws_ami.amazon-linux-2.image_id : var.ami_id
+  image_id    = var.ami_id == "" ? data.aws_ami.amazon_linux_2.image_id : var.ami_id
 
   instance_type = var.instance_type
 
@@ -75,7 +75,7 @@ resource "aws_launch_template" "bastion" {
 
   # iam profile for instances
   iam_instance_profile {
-    arn = aws_iam_instance_profile.profile.arn
+    arn = aws_iam_instance_profile.bastion.arn
   }
 
   lifecycle {

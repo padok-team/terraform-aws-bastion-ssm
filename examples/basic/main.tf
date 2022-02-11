@@ -108,4 +108,3 @@ resource "aws_security_group" "bastion_ssm" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-

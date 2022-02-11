@@ -1,7 +1,6 @@
 # default IAM for our Bastion
 # merged with config provided to init the module
-
-data "aws_iam_policy_document" "assume-role" {
+data "aws_iam_policy_document" "assume_role" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -41,9 +40,10 @@ data "aws_iam_policy_document" "bastion" {
     resources = ["arn:aws:s3:::${var.ssm_logging_bucket_name}/*"]
   }
 }
+
 resource "aws_iam_role" "bastion" {
   name               = "${local.lname}_asg_iam"
-  assume_role_policy = data.aws_iam_policy_document.assume-role.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 resource "aws_iam_role_policy" "bastion" {
@@ -70,7 +70,7 @@ resource "aws_iam_role_policy" "custom_iam" {
 }
 
 # finaly, create the instance profile from iam role
-resource "aws_iam_instance_profile" "profile" {
+resource "aws_iam_instance_profile" "bastion" {
   name_prefix = "${local.lname}_asg_iam"
   role        = aws_iam_role.bastion.name
 }
