@@ -1,0 +1,8 @@
+---
+site_name: terraform-aws-bastion-ssm
+
+repo_name: padok-team/terraform-aws-bastion-ssm
+repo_url: https://github.com/padok-team/terraform-aws-bastion-ssm
+
+plugins:
+  - techdocs-core
