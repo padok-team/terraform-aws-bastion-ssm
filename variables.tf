@@ -30,13 +30,6 @@ variable "ami_id" {
   default     = ""
 }
 
-
-# variable "key_name" {
-#   description = "The key name to use for the instance"
-#   type        = string
-#   default     = ""
-# }
-
 variable "update_default_version" {
   description = "Whether to update Default Version each update."
   type        = bool
@@ -146,30 +139,6 @@ variable "enabled_metrics" {
     "GroupTerminatingInstances", "GroupTotalInstances"
   ]
 }
-
-variable "manage_ssm_user_ssh_key" {
-  description = "Set to true if you want to let the module manage the ssh key for the ssm-user, if set to false you need to set `custom_ssm_user_public_key` "
-  type        = bool
-  default     = true
-}
-
-variable "custom_ssm_user_public_key" {
-  description = "The public key to use for the ssm-user user"
-  type        = string
-  default     = ""
-}
-
-# variable "manage_ec2_user_ssh_key" {
-#   description = "Whether you want to let the module manage the ssh key for the ec2-user, if set to false you need to set `custom_ec2_user_public_key` "
-#   type        = bool
-#   default     = true
-# }
-
-# variable "custom_ec2_user_public_key" {
-#   description = "The public key to use for the ec2-user user"
-#   type        = string
-#   default     = ""
-# }
 
 variable "add_ssm_user_to_sudoers" {
   description = "Set to true if you want to add the ssm_user to sudoers"
