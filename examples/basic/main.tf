@@ -42,12 +42,6 @@ module "my_ssm_bastion" {
   vpc_zone_identifier     = module.my_vpc.private_subnets_ids
 }
 
-output "ssm_key" {
-  value     = module.my_ssm_bastion.ssm_private_key
-  sensitive = true
-}
-
-
 ################################################################################
 # Supporting resources
 ################################################################################
