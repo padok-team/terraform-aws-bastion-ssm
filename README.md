@@ -1,26 +1,36 @@
 # AWS SSM Bastion Terraform module
 
-Terraform module which creates a SSM Bastion resources on AWS. This module will allow you to use SSH tunnel to access your private ressources (like EKS endpoint, RDS, etc).
+Terraform module which creates a SSM Bastion resources on AWS. This module will allow you to connect to private ressources in your VPC (like EKS endpoint, RDS, etc).
 
 ### Context
 
-Currently SSM start-session doesn't support remote forwarding. To tackle this issue, we use a bastion host ([there is an open issue to add this feature to SSM](https://github.com/aws/amazon-ssm-agent/pull/389)). When the remote forward will be available, this module will be updated because we won't need a host (we wont need SSH keys either).
+To open a tunnel (local or remote), read the following documentation: https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html#sessions-remote-port-forwarding
 
-To easily use remote forwarding, add the following configuration to your SSH config (`~/.ssh/config`):
+#### TL;DR
 
-```
-host i-* mi-*
-  ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
-  User ssm-user
-```
-
-To open a SSH tunnel, you can use the following command:
-
-```
-ssh -i ~/.ssh/id_rsa -L 8080:localhost:8080 i-xxxxxxxxxxx
+Local Forward :
+```bash
+aws ssm start-session \
+    --target instance-id \
+    --document-name AWS-StartPortForwardingSession \
+    --parameters '{"portNumber":["80"], "localPortNumber":["56789"]}'
 ```
 
-You can get an overview of why SSM is a very useful feature by reading our blog post about it [here](https://www.padok.fr/en/blog/aws-ssh-bastion).
+Remote Forward to an RDS instance :
+```bash
+aws ssm start-session \
+    --target instance-id \
+    --document-name AWS-StartPortForwardingSessionToRemoteHost \
+    --parameters '{"host":["mydb.example.us-east-2.rds.amazonaws.com"],"portNumber":["3306"], "localPortNumber":["3306"]}'
+```
+
+Remote Forward to a private EKS API Server :
+```bash
+aws ssm start-session \
+    --target instance-id \
+    --document-name AWS-StartPortForwardingSessionToRemoteHost \
+    --parameters '{"host":["https://216E6F4D2AD7F5E4E689AA120CD23E26.gr7.eu-west-3.eks.amazonaws.com"],"portNumber":["10443"], "localPortNumber":["443"]}'
+```
 
 ### Note about Patch Management - Instance lifetime
 
@@ -29,7 +39,6 @@ By default, EC2 instances will be patched with the latest patches during first l
 ## User Stories for this module
 
 - AAOps I can deploy a SSM Bastion that allows me to access my private endpoints (EKS, RDS, etc)
-- AAOps I can deploy a SSM Bastion that allows me to access my private endpoints (EKS, RDS, etc) with a custom SSH key for the `ssm-user` user
 
 ## Usage
 
@@ -41,18 +50,11 @@ module "my_ssm_bastion" {
   security_groups         = [aws_security_group.bastion_ssm.id]
   vpc_zone_identifier     = module.my_vpc.private_subnets_ids
 }
-
-output "ssm_key" {
-  value     = module.my_ssm_bastion.ssm_private_key
-  sensitive = true
-}
-
 ```
 
 ## Examples
 
 - [AAOps I can deploy a SSM Bastion that allows me to access my private endpoints](examples/basic/main.tf)
-- [AAOps I can deploy a SSM Bastion that allows me to access my private endpoints (EKS, RDS, etc) with a custom SSH key for the ssm-user user](examples/custom_ssh_key/main.tf)
 <!-- BEGIN_TF_DOCS -->
 ## Modules
 
