@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "bastion" {
       "s3:GetEncryptionConfiguration"
     ]
 
-    resources = ["arn:aws:s3:::${var.ssm_logging_bucket_name}"]
+    resources = ["arn:aws:s3:::${local.ssm_logging_bucket_name}"]
   }
   # needed by SSM to store session logs
   statement {
@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "bastion" {
       "s3:PutObjectAcl"
     ]
 
-    resources = ["arn:aws:s3:::${var.ssm_logging_bucket_name}/*"]
+    resources = ["arn:aws:s3:::${local.ssm_logging_bucket_name}/*"]
   }
 }
 

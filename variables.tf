@@ -4,6 +4,13 @@
 variable "ssm_logging_bucket_name" {
   description = "SSM Logging Bucket name"
   type        = string
+  default     = null
+}
+
+variable "create_ssm_logging_bucket" {
+  description = "Set to true if the SSM Logging Bucket must be created"
+  type        = bool
+  default     = true
 }
 
 variable "ssm_logging_bucket_encryption" {

@@ -37,9 +37,8 @@ locals {
 module "my_ssm_bastion" {
   source = "../.."
 
-  ssm_logging_bucket_name = aws_s3_bucket.ssm_logs.id
-  security_groups         = [aws_security_group.bastion_ssm.id]
-  vpc_zone_identifier     = module.my_vpc.private_subnets_ids
+  security_groups     = [aws_security_group.bastion_ssm.id]
+  vpc_zone_identifier = module.my_vpc.private_subnets_ids
 }
 
 ################################################################################
@@ -60,23 +59,6 @@ module "my_vpc" {
 
   tags = {
     CostCenter = "Network"
-  }
-}
-
-# s3 bucket for logging
-resource "aws_s3_bucket" "ssm_logs" {
-  bucket = "bastion-ssm-logs"
-
-  versioning {
-    enabled = true
-  }
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "aws:kms"
-      }
-    }
   }
 }
 
