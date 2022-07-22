@@ -20,7 +20,7 @@ resource "aws_ssm_document" "ssm_logging" {
     "description": "Document to hold regional settings for Session Manager",
     "sessionType": "Standard_Stream",
     "inputs": {
-        "s3BucketName": "${var.ssm_logging_bucket_name}",
+        "s3BucketName": "${local.ssm_logging_bucket_name}",
         "s3KeyPrefix": "",
         "s3EncryptionEnabled": ${var.ssm_logging_bucket_encryption},
         "shellProfile": {
@@ -30,4 +30,17 @@ resource "aws_ssm_document" "ssm_logging" {
     }
 }
 EOF
+}
+
+resource "random_pet" "ssm_logging_bucket_pet" {}
+
+locals {
+  ssm_logging_bucket_name = var.ssm_logging_bucket_name != null ? var.ssm_logging_bucket_name : "ssm-logging-bucket-${random_pet.ssm_logging_bucket_pet.id}"
+}
+
+module "ssm_logging_bucket" {
+  count  = var.create_ssm_logging_bucket ? 1 : 0
+  source = "git@github.com:padok-team/terraform-aws-s3?ref=v0.1.0"
+
+  name = local.ssm_logging_bucket_name
 }
