@@ -37,7 +37,6 @@ locals {
 module "my_ssm_bastion" {
   source = "../.."
 
-  security_groups     = [aws_security_group.bastion_ssm.id]
   vpc_zone_identifier = module.my_vpc.private_subnets_ids
 }
 
@@ -59,28 +58,5 @@ module "my_vpc" {
 
   tags = {
     CostCenter = "Network"
-  }
-}
-
-# create a security group
-resource "aws_security_group" "bastion_ssm" {
-  name        = "bastion_ssm"
-  description = "Allow output for bastion"
-  vpc_id      = module.my_vpc.vpc_id
-
-  # external access
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # tunnel to RDS
-  egress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 }
