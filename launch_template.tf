@@ -34,7 +34,7 @@ resource "aws_launch_template" "bastion" {
   network_interfaces {
     associate_public_ip_address = var.associate_public_ip_address
     delete_on_termination       = var.delete_on_termination
-    security_groups             = var.security_groups
+    security_groups             = [aws_security_group.ssm_sg.id]
     description                 = trimsuffix(local.lname, "-")
   }
 

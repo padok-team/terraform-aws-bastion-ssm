@@ -58,11 +58,6 @@ variable "delete_on_termination" {
   default     = true
 }
 
-variable "security_groups" {
-  description = "A list of security group IDs to associate."
-  type        = list(string)
-}
-
 variable "device_name" {
   description = "Name of the device (/dev/xxxx) to mount"
   type        = string

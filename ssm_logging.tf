@@ -32,10 +32,8 @@ resource "aws_ssm_document" "ssm_logging" {
 EOF
 }
 
-resource "random_pet" "ssm_logging_bucket_pet" {}
-
 locals {
-  ssm_logging_bucket_name = var.ssm_logging_bucket_name != null ? var.ssm_logging_bucket_name : "ssm-logging-bucket-${random_pet.ssm_logging_bucket_pet.id}"
+  ssm_logging_bucket_name = var.ssm_logging_bucket_name != null ? var.ssm_logging_bucket_name : "ssm-logging-bucket-${random_pet.version.id}"
 }
 
 module "ssm_logging_bucket" {
