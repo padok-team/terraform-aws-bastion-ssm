@@ -49,4 +49,8 @@ resource "aws_autoscaling_group" "bastion" {
   lifecycle {
     create_before_destroy = true
   }
+  
+  provisioner "local-exec" {
+    command = "aws ec2 describe-instances --filters \"Name=tag:Name,Values=bastion-ssm-*\" --query \"Reservations[*].Instances[*].[InstanceId]\" --output text"
+  }
 }
